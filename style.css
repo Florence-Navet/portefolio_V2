@@ -194,6 +194,10 @@ body {
   background: var(--main-color);
   color: var(--white-color);
 }
+.page {
+  z-index: 1;
+} 
+
 
 .book-page.page-right {
   position: absolute;
@@ -284,6 +288,12 @@ body {
   height: auto;
   border-radius: 0.3rem;
 }
+.workeduc-img video {
+  height: 95px; /* Ajustez cette valeur selon vos pxbesoins */
+  width: 100%; /* Conserve la largeur à 100% */
+  object-fit: cover; /* Ajuste l'image vidéo pour remplir sans déformer */
+}
+
 .workeduc-content {
   flex-grow: 1;
   width: 55%;

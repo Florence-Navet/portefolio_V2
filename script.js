@@ -29,41 +29,6 @@ function toggleEventListeners() {
   });
 }
 
-// Fonction : Gestion du bouton "Contact Me"
-function setupContactButton() {
-  const contactMeBtn = document.querySelector(".btn.contact-me");
-  if (contactMeBtn) {
-    contactMeBtn.onclick = () => {
-      pages.forEach((page, index) => {
-        setTimeout(() => {
-          page.classList.add("turn");
-          setTimeout(() => (page.style.zIndex = 20 + index), 500);
-        }, (index + 1) * 200 + 100);
-      });
-    };
-  }
-}
-
-// Fonction : Gestion du bouton "Back to Profile"
-function setupBackProfileButton() {
-  const backProfileBtn = document.querySelector(".back-profile");
-  if (backProfileBtn) {
-    backProfileBtn.onclick = () => {
-      pages.forEach((_, index) => {
-        setTimeout(() => {
-          reverseIndex();
-          pages[pageNumber].classList.remove("turn");
-
-          setTimeout(() => {
-            reverseIndex();
-            pages[pageNumber].style.zIndex = 10 + index;
-          }, 500);
-        }, (index + 1) * 200 + 100);
-      });
-    };
-  }
-}
-
 // Fonction : Gère l'index inversé pour revenir en arrière
 function reverseIndex() {
   pageNumber--;
@@ -74,29 +39,34 @@ function reverseIndex() {
 
 // Fonction : Animation d'ouverture automatique au chargement
 function autoOpenAnimation() {
+  // Réinitialiser l'état des pages (enlever la classe "turn" et remettre un zIndex de base)
+  pages.forEach((page, index) => {
+    page.classList.remove("turn"); // Enlever toute page tournée
+    page.style.zIndex = 10 + index; // Initialiser les zIndex de base
+  });
+
+  // Ouvre la couverture droite après un délai
   setTimeout(() => {
     coverRight.classList.add("turn"); // Ouvre la couverture droite
   }, 2100);
 
+  // Masque la couverture après un autre délai
   setTimeout(() => {
     coverRight.style.zIndex = -1; // Masque la couverture
   }, 2800);
 
+  // Met la page gauche devant après un délai
   setTimeout(() => {
     pageLeft.style.zIndex = 20; // Met la page gauche devant
   }, 3200);
 
-  // Animation progressive des pages droites
-  pages.forEach((_, index) => {
+  // Animation progressive des pages droites (ajustement du zIndex pour chaque page)
+  pages.forEach((page, index) => {
     setTimeout(() => {
-      reverseIndex();
-      pages[pageNumber].classList.remove("turn");
+      page.classList.add("turn"); // Tourne la page
 
       setTimeout(() => {
-        reverseIndex();
-        pages[pageNumber].style.zIndex = 15 + index;
-
-        console.log("page number"); // Affiche "Bonjour, monde !" dans la console
+        page.style.zIndex = 100 + index; // Ajuste dynamiquement le zIndex pour chaque page tournée
       }, 500);
     }, (index + 1) * 200 + 2100);
   });
@@ -122,8 +92,6 @@ function switchStylesheet() {
 
 // Active les gestionnaires d'événements au chargement
 toggleEventListeners();
-setupContactButton();
-setupBackProfileButton();
 
 // Lance l'animation d'ouverture
 autoOpenAnimation();
